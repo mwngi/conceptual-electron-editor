@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron ."
   },
+  "repository": "https://github.com/SAKryukov/conceptual-electron-editor",
   "author": "Sergey A Kryukov",
   "license": "MIT",
   "keywords": [

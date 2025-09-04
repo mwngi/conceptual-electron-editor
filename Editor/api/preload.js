@@ -33,4 +33,6 @@ contextBridge.exposeInMainWorld(bridgeAPI.bridgePlugin, {
 contextBridge.exposeInMainWorld(bridgeAPI.bridgeMetadata, {
     metadata: async () =>
         await ipcRenderer.invoke(ipcChannel.metadata.request),
+    showSource: () =>
+        ipcRenderer.send(ipcChannel.metadata.source),
 }); //contextBridge.exposeInMainWorld

@@ -8,6 +8,7 @@ const definitionSet = {
         preload: "api/preload.js",
         image: "main/editor.png",
         index: "renderer/index.html",
+        package: "package.json",
     },
     utility: {
         fileDialog: {
@@ -36,7 +37,7 @@ const definitionSet = {
             show: false,
             frame: true,
             transparent: false,
-            title: "Hello World",
+            title: "",
             webPreferences: { //https://www.electronjs.org/docs/latest/api/structures/web-preferences
                 preload: preloadScript,
                 sandbox: false, // required with CommonJS or ES Modules used in preload

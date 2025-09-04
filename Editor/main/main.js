@@ -7,6 +7,7 @@ const { pluginProvider } = require("./plugin-provider.js");
 const { app, dialog, BrowserWindow, Menu, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('node:path');
+const shell = require('electron').shell;
 
 const image = null;
 
@@ -16,16 +17,27 @@ const handlePlugins = (applicationPath, window) => {
 }; //handlePlugins
 
 const subscribeToEvents = window => {
+    const getPackage = () => {
+        const packageFileName = path.join(app.getAppPath(), definitionSet.paths.package);
+        if (fs.existsSync(packageFileName))
+            return JSON.parse(fs.readFileSync(packageFileName));
+    }; //getPackage
     ipcMain.handle(ipcChannel.metadata.request, async (_event) => {
-        const packageFileName = path.join(app.getAppPath(), "package.json");
+        const thePackage = getPackage();
         return {
-            package: fs.existsSync(packageFileName)
-                ? JSON.parse(fs.readFileSync(packageFileName))
-                : null,
+            package: thePackage,
             versions: process.versions,
             applicationVersion: app.getVersion(),
             applicationName: app.name,
     }}); //metadata.request
+    ipcMain.on(ipcChannel.metadata.source, () => {
+        const thePackage = getPackage();
+        if (thePackage) {
+            const source = thePackage.repository;
+            if (source)
+                shell.openExternal(source);
+        } //if
+    }); //metadata.source
     utilitySet.setup({ definitionSet, dialog, fs, window, image, app, process, });
     ipcMain.on(ipcChannel.fileIO.openFile, () => {
         utilitySet.openFile((filename, text, error) =>

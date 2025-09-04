@@ -75,7 +75,8 @@ const subscribe = (elementSet, menu, metadata) => {
     }); //help.about
 
     menu.subscribe(elementSet.menuItems.help.sourceCode.textContent, actionRequest => {
-        if (!actionRequest) return false;
+        if (!actionRequest) return true;
+        window.bridgeMetadata.showSource();
         return true;
     }); //help.sourceCode
 
