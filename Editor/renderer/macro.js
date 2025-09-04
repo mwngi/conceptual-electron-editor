@@ -5,7 +5,7 @@ const createMacroProcessor = editor => {
     let recordingMacro = false;
     let macro = [];
     const playMacro = () => {
-        if (recordingMacro == null) return;
+        if (recordingMacro) return;
         const initialSelection = editor.selectionStart;
         let delta = null;
         for (const event of macro) { // SA??? not fully implemented
@@ -34,7 +34,7 @@ const createMacroProcessor = editor => {
     } //setRecordingState
     const canRecord = () => !recordingMacro;
     const canStopRecording = () => recordingMacro;
-    const canPlay = () => !recordingMacro && macro != null;
+    const canPlay = () => !recordingMacro && macro.length > 0;
 
     editor.onkeydown = event => {
         if (!recordingMacro) return;
