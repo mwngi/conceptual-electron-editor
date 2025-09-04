@@ -9,12 +9,16 @@
   "author": "Sergey A Kryukov",
   "license": "MIT",
   "keywords": [
-    "Electron",
-    "demo",
-    "concept",
+    "electron",
+    "nodejs",
+    "javascript",
     "plugin",
-    "text",
-    "editor"
+    "cross-platform",
+    "chrome-browser",
+    "chromium-browser",
+    "keyboard-macros",
+    "remote-debugger",
+    "remote-debugging"
   ],
   "devDependencies": {
     "electron": "^37.4.0"

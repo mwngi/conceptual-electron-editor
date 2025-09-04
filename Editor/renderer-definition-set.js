@@ -31,6 +31,12 @@ const getDefinitionSet = () => {
             <br/><br/>`,
         events: {
             DOMContentLoaded: 0,
+            selectionchange: 0,
+        },
+        keys: {
+            Backspace: 0,
+            Delete: 0,
+            Enter: 0,
         },
         elements: {
             script: 0,
@@ -50,7 +56,7 @@ const getDefinitionSet = () => {
         },
     }; //definitionSet
 
-    for (const subset of [definitionSet.events, definitionSet.elements])
+    for (const subset of [definitionSet.events, definitionSet.elements, definitionSet.keys])
         for (const index in subset)
             if (!subset[index])
                 subset[index] = index;

@@ -15,6 +15,11 @@ const getElementSet = document => {
                 about: document.querySelector("#menu-about"),
                 sourceCode: document.querySelector("#menu-source-code"),
             },
+            macro: {
+                startRecording: document.querySelector("#menu-start-macro-recoding"),
+                stopRecording: document.querySelector("#menu-stop-macro-recoding"),
+                play: document.querySelector("#menu-play-macro"),
+            },
             pluginParent: document.querySelector("#menu-plugins"),
         },
         modifiedFlag: document.querySelector("span#id-modified-flag"),

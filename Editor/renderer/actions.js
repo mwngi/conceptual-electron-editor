@@ -6,6 +6,8 @@ const subscribe = (elementSet, menu, metadata) => {
     let currentFilename = null;
     let isModified = false;
 
+    // File I/O:
+
     const reportError = (error, errorKind) =>
         modalDialog.show(definitionSet.errorHandling.format(errorKind, error.message));
 
@@ -42,7 +44,7 @@ const subscribe = (elementSet, menu, metadata) => {
         window.bridgeFileIO.openFile((filename, baseFilename, text, error) =>
             handleFileOperationResult(filename, baseFilename, text, error));
         return true;
-    }); //file.newFile
+    }); //file.open
 
     const saveAs = () =>
         window.bridgeFileIO.saveFileAs(elementSet.editor.value, (filename, baseFilename, error) =>
@@ -52,7 +54,7 @@ const subscribe = (elementSet, menu, metadata) => {
         if (!actionRequest) return true;
         saveAs();
         return true;
-    }); //file.newFile
+    }); //file.saveAs
 
     menu.subscribe(elementSet.menuItems.file.saveExisting.textContent, actionRequest => {
         if (!actionRequest) return isModified;
@@ -62,16 +64,41 @@ const subscribe = (elementSet, menu, metadata) => {
         else
             saveAs();
         return true;
-    }); //file.newFile
+    }); //file.saveExisting
+
+    // Help:
 
     menu.subscribe(elementSet.menuItems.help.about.textContent, actionRequest => {
         if (!actionRequest) return true;
         modalDialog.show(definitionSet.aboutDialog(metadata));
         return true;
-    }); //file.newFile
+    }); //help.about
 
     menu.subscribe(elementSet.menuItems.help.sourceCode.textContent, actionRequest => {
         if (!actionRequest) return false;
+        return true;
+    }); //help.sourceCode
+
+    // Macro:
+
+    const macroProcessor = createMacroProcessor(elementSet.editor);
+    menu.subscribe(elementSet.menuItems.macro.startRecording.textContent, actionRequest => {
+        if (!actionRequest) return macroProcessor.canRecord();
+        elementSet.editor.focus();
+        macroProcessor.setRecordingState(true);
+        return true;
+    }); //file.newFile
+
+    menu.subscribe(elementSet.menuItems.macro.stopRecording.textContent, actionRequest => {
+        if (!actionRequest) return macroProcessor.canStopRecording();
+        macroProcessor.setRecordingState(false);
+        elementSet.editor.focus();
+        return true;
+    }); //file.newFile
+
+    menu.subscribe(elementSet.menuItems.macro.play.textContent, actionRequest => {
+        if (!actionRequest) return macroProcessor.canPlay();
+        macroProcessor.playMacro();
         return true;
     }); //file.newFile
 
