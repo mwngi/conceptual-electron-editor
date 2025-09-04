@@ -41,6 +41,18 @@ const createMacroProcessor = editor => {
         macro.push(event);
     }; //editor.onkeydown
 
+    window.addEventListener(definitionSet.events.keydown, event => {
+        if (event.shiftKey && event.ctrlKey) {
+            if (event.code == definitionSet.keys.KeyP && canPlay()) {
+                playMacro();
+                event.preventDefault();
+            } else if (event.code == definitionSet.keys.KeyR && canRecord()) {
+                setRecordingState(true);
+                event.preventDefault();
+            } //if
+        } //if
+    }); //window.addEventListener
+
     editor.onselectionchange = event => {
         if (!recordingMacro) return;
         event.point = { start: event.target.selectionStart, end: event.target.selectionEnd, }

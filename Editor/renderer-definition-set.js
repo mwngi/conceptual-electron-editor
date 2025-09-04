@@ -31,12 +31,15 @@ const getDefinitionSet = () => {
             <br/><br/>`,
         events: {
             DOMContentLoaded: 0,
+            keydown: 0,
             selectionchange: 0,
         },
         keys: {
             Backspace: 0,
             Delete: 0,
             Enter: 0,
+            KeyP: 0,
+            KeyR: 0,
         },
         elements: {
             script: 0,
