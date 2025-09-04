@@ -4,6 +4,7 @@ const getElementSet = document => {
     return {
         editor: document.querySelector("textarea"),
         menu: document.querySelector("menu"),
+        statusBar: document.querySelector("footer"),
         menuItems: {
             file: {
                 newFile: document.querySelector("#menu-new"),
@@ -19,6 +20,10 @@ const getElementSet = document => {
                 startRecording: document.querySelector("#menu-start-macro-recoding"),
                 stopRecording: document.querySelector("#menu-stop-macro-recoding"),
                 play: document.querySelector("#menu-play-macro"),
+            },
+            view: {
+                statusBar: document.querySelector("#menu-status-bar"),
+                fullscreen: document.querySelector("#menu-full-screen"),
             },
             pluginParent: document.querySelector("#menu-plugins"),
         },

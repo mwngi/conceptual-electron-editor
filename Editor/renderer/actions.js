@@ -103,4 +103,21 @@ const subscribe = (elementSet, menu, metadata) => {
         return true;
     }); //file.newFile
 
+    // View:
+
+    let statusBarVisible = true;
+
+    menu.subscribe(elementSet.menuItems.view.statusBar.textContent, actionRequest => {
+        if (!actionRequest) return true;
+        statusBarVisible = !statusBarVisible;
+        elementSet.statusBar.style.display = definitionSet.view.statusBarStyle(statusBarVisible);
+        return true;
+    }); //file.newFile
+
+    menu.subscribe(elementSet.menuItems.view.fullscreen.textContent, actionRequest => {
+        if (!actionRequest) return true;
+        window.bridgeUI.fullscreenToggle();
+        return true;
+    }); //file.newFile
+
 }; //subscribe

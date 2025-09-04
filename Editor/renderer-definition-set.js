@@ -57,6 +57,9 @@ const getDefinitionSet = () => {
             save: "Save file error",
             open: "Open file error",
         },
+        view: {
+            statusBarStyle: visible => visible ? "flex" : "none",
+        },
     }; //definitionSet
 
     for (const subset of [definitionSet.events, definitionSet.elements, definitionSet.keys])

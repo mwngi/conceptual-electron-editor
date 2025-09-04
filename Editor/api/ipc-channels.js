@@ -14,15 +14,20 @@ const ipcChannel = {
         request: 0,
         source: 0, // show application source code in a default external browser
     }, //metadata
+    ui: {
+        fullscreen: 0,
+        fullscreenToggle: 0,
+    }, //ui
 }; //ipcChannel
 
 const bridgeAPI = {
     bridgeFileIO: 0,
     bridgePlugin: 0,
     bridgeMetadata: 0,
+    bridgeUI: 0,
 }; //bridgeAPI
 
-for (const subset of [ipcChannel.fileIO, ipcChannel.plugin, bridgeAPI, ipcChannel.metadata])
+for (const subset of [ipcChannel.fileIO, ipcChannel.plugin, bridgeAPI, ipcChannel.metadata, ipcChannel.ui])
     for (const index in subset)
         if (!subset[index])
             subset[index] = index;

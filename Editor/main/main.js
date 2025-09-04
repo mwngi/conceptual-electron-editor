@@ -51,6 +51,14 @@ const subscribeToEvents = window => {
         utilitySet.saveExistingFile(filename, text, (filename, error) =>
             window.webContents.send(ipcChannel.fileIO.saveExistingFile, filename, path.basename(filename), error));
     });
+    let isFullscreen = false;
+    ipcMain.on(ipcChannel.ui.fullscreen, (_event, onOff) => {
+         window.setFullScreen(onOff);
+    });
+    ipcMain.on(ipcChannel.ui.fullscreenToggle, _event => {
+        isFullscreen = !isFullscreen;
+         window.setFullScreen(isFullscreen);
+    });
 }; //subscribeToEvents
 
 const handleCommandLine = window => {

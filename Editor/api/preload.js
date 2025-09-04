@@ -36,3 +36,10 @@ contextBridge.exposeInMainWorld(bridgeAPI.bridgeMetadata, {
     showSource: () =>
         ipcRenderer.send(ipcChannel.metadata.source),
 }); //contextBridge.exposeInMainWorld
+
+contextBridge.exposeInMainWorld(bridgeAPI.bridgeUI, {
+    fullscreen: async onOff =>
+        ipcRenderer.send(ipcChannel.ui.fullscreen, onOff),
+    fullscreenToggle: () =>
+        ipcRenderer.send(ipcChannel.ui.fullscreenToggle),
+}); //contextBridge.exposeInMainWorld
