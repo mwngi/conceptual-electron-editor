@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../renderer-definition-set.js"></script>
+    <script src="./element-set.js"></script>
+    <script src="./plugin-processor.js"></script>
+    <script src="./ui/menu.js"></script>
+    <script src="./ui/modal-dialog.js"></script>
+    <script src="./actions.js"></script>
+    <script src="./renderer.js"></script>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <title>Text Editor</title>
+    <style>
+        @import url(css/flex.css);
+        @import url(css/menu.css);
+        @import url(ui/modal-dialog.css);
+        /* standaloneExecutionProtection: */
+        :root {
+            --border: solid thin gray
+        }
+        body > aside { color: red; font-size: 160%; margin: 1em; }
+        body > p, body > aside { margin-left: 20pt; }
+        /* end standaloneExecutionProtection: */
+        * { font-family: sans-serif; }
+        main { overflow: hidden; border-top: var(--border); border-bottom: var(--border); }
+        main { display: flex; flex-direction: row; justify-content: center; }
+        footer, textarea { padding-left: var(--deltaX); padding-right: var(--deltaX); }
+        textarea { width: 100%; height: 100%; padding-bottom: 1px;
+            font-size: 100%;
+            resize: none; border: none; outline: none;
+            white-space: nowrap;
+            background-color: white;
+        } 
+        header { background-color: aliceblue; }
+        footer { background-color: linen; }
+    </style>
+</head>
+<body>
+
+    <header>
+            <menu>
+                <li>
+                    <header>File</header>
+                    <select>
+                        <option id="menu-new">New</option>
+                        <option id="menu-open" selected="true">Open...</option>
+                        <option id="menu-save-existing">Save</option>
+                        <option id="menu-save-as">Save As...</option>
+                    </select>
+                </li>
+                <li>
+                    <header>Edit</header>
+                    <select>
+                        <option>Undo</option>
+                        <option>Redo</option>
+                    </select>
+                </li>    
+                <li>
+                    <header>Plugin</header>
+                    <select id="menu-plugins">
+                    </select>                    
+                </li>                    
+                <li>
+                    <header>View</header>
+                    <select>
+                        <option>Status Bar</option>
+                        <option>Full Screen</option>
+                    </select>
+                </li>    
+                <li>
+                    <header>Help</header>
+                    <select>
+                        <option id="menu-about">About</option>
+                        <option id="menu-source-code">Source Code</option>
+                    </select>
+                </li>    
+            </menu>
+    </header>
+    <main><textarea spellcheck="false"></textarea></main>
+    <footer>&nbsp;<span id="id-modified-flag"></span></footer>
+
+</body>
+</html>

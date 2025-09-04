@@ -1,0 +1,2 @@
+pluginProcessor.registerPlugin({
+});

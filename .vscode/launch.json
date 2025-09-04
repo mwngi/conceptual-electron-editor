@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Editor",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "c:/app/Node.js/node_modules/.bin/electron.cmd",
+      "windows": {
+        "runtimeExecutable": "c:/app/Node.js/node_modules/electron/dist/electron.exe"
+      },
+      "args" : ["${workspaceFolder}/Editor", "--remote-debugging-port=9223", "--trace-warnings", "${workspaceFolder}/Editor/../test.txt"],
+      "outputCapture": "std"
+    },
+    {
+      "name": "Renderer",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9223,
+      "webRoot": "${workspaceFolder}/Editor",
+      "timeout": 30000
+    },
+    {
+      "name": "HTML",
+      "type": "chrome",
+      "request": "launch",
+      "file": "${workspaceFolder}/Editor/renderer/index.html", 
+    },
+  ],
+  "compounds": [
+    {
+      "name": "Editor: All",
+      "configurations": [
+        "Editor", "Renderer",
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+@npx @electron/packager ../Editor --platform=linux --arch=x64

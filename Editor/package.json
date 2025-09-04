@@ -1,0 +1,22 @@
+{
+  "name": "conceptual-electron-editor",
+  "version": "0.2.0",
+  "description": "Conceptual Electron Editor",
+  "main": "./main/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Sergey A Kryukov",
+  "license": "MIT",
+  "keywords": [
+    "Electron",
+    "demo",
+    "concept",
+    "plugin",
+    "text",
+    "editor"
+  ],
+  "devDependencies": {
+    "electron": "^37.4.0"
+  }
+}
