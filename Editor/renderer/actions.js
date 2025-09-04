@@ -13,7 +13,7 @@ const subscribe = (elementSet, menu, metadata) => {
 
     const updateModifiedFlag = flag => {
         isModified = flag;
-        elementSet.modifiedFlag.innerHTML = flag
+        elementSet.statusBar.modifiedFlag.innerHTML = flag
             ? definitionSet.status.modified
             : null;
     }; //updateModifiedFlag
@@ -110,7 +110,7 @@ const subscribe = (elementSet, menu, metadata) => {
     menu.subscribe(elementSet.menuItems.view.statusBar.textContent, actionRequest => {
         if (!actionRequest) return true;
         statusBarVisible = !statusBarVisible;
-        elementSet.statusBar.style.display = definitionSet.view.statusBarStyle(statusBarVisible);
+        elementSet.statusBar.all.style.display = definitionSet.view.statusBarStyle(statusBarVisible);
         return true;
     }); //file.newFile
 

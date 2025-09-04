@@ -25,5 +25,9 @@ window.addEventListener(definitionSet.events.DOMContentLoaded, async () => {
     elementSet = getElementSet(document);
     if (!window.bridgePlugin)
         return definitionSet.standaloneExecutionProtection();
+    elementSet.editor.addEventListener(definitionSet.events.selectionchange, event => {
+        elementSet.statusBar.cursorPositionIndicator.innerHTML =
+            definitionSet.status.cursorPosition(event.target.value, event.target.selectionStart);
+    }); //editor.onselectionchange
     elementSet.editor.focus();
 }); //DOMContentLoaded

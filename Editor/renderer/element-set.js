@@ -4,7 +4,11 @@ const getElementSet = document => {
     return {
         editor: document.querySelector("textarea"),
         menu: document.querySelector("menu"),
-        statusBar: document.querySelector("footer"),
+        statusBar: {
+            all: document.querySelector("footer"),
+            modifiedFlag: document.querySelector("span#id-modified-flag"),
+            cursorPositionIndicator: document.querySelector("span#id-position-indicator"), // to implement
+        },
         menuItems: {
             file: {
                 newFile: document.querySelector("#menu-new"),
@@ -27,7 +31,6 @@ const getElementSet = document => {
             },
             pluginParent: document.querySelector("#menu-plugins"),
         },
-        modifiedFlag: document.querySelector("span#id-modified-flag"),
     };
 }; //elementSet
 

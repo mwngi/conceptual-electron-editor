@@ -36,10 +36,16 @@ const createMacroProcessor = editor => {
     const canStopRecording = () => recordingMacro;
     const canPlay = () => !recordingMacro && macro.length > 0;
 
-    editor.onkeydown = event => {
+    editor.addEventListener(definitionSet.events.keydown, event => {
         if (!recordingMacro) return;
         macro.push(event);
-    }; //editor.onkeydown
+    }); //editor.onkeydown
+
+    editor.addEventListener(definitionSet.events.selectionchange, event => {
+        if (!recordingMacro) return;
+        event.point = { start: event.target.selectionStart, end: event.target.selectionEnd, }
+        macro.push(event);
+    }); //editor.onselectionchange
 
     window.addEventListener(definitionSet.events.keydown, event => {
         if (event.shiftKey && event.ctrlKey) {
@@ -52,12 +58,6 @@ const createMacroProcessor = editor => {
             } //if
         } //if
     }); //window.addEventListener
-
-    editor.onselectionchange = event => {
-        if (!recordingMacro) return;
-        event.point = { start: event.target.selectionStart, end: event.target.selectionEnd, }
-        macro.push(event);
-    }; //editor.onselectionchange
 
     return { canRecord, canStopRecording, canPlay, recordingState, setRecordingState, playMacro, };
 
