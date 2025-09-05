@@ -21,7 +21,9 @@
         @import url(ui/modal-dialog.css);
         /* standaloneExecutionProtection: */
         :root {
-            --border: solid thin gray
+            --border: solid thin gray;
+            --status-delta-Y: 0.1em;
+            --status-delta-X: 0.4em;
         }
         body > aside { color: red; font-size: 160%; margin: 1em; }
         body > p, body > aside { margin-left: 20pt; }
@@ -39,6 +41,10 @@
         textarea:not(:focus)::selection { background-color: green; color: white }
         header { background-color: aliceblue; }
         footer { background-color: linen; }
+        footer > span > span, footer > small
+            { background-color: hsl(30, 67%, 80%);
+                padding: var(--status-delta-Y);
+                padding-left: var(--status-delta-X); padding-right: var(--status-delta-X); }
     </style>
 </head>
 <body>
@@ -89,7 +95,14 @@
             </menu>
     </header>
     <main><textarea spellcheck="false"></textarea></main>
-    <footer><span id="id-position-indicator"></span>&nbsp;<span id="id-modified-flag"></span></footer>
+    <footer>
+        <span>
+            <span id="id-position-indicator"></span>&nbsp;<span id="id-modified-flag"></span>
+        </span>
+        <small>
+            Copyright &copy; 2025 by S A Kryukov
+        </small>
+    </footer>
 
 </body>
 </html>

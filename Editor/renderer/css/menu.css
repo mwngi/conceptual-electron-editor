@@ -7,7 +7,7 @@ http://www.codeproject.com/Members/SAKryukov
 */
 
 :root {
-    --deltaX: 2em;
+    --deltaX: 0.6em;
     --margin-Y: 0.3em;
     --padding: 0.3em 1em 0.3em 1em;
     --padding-option: 0.12em 1.4em 0.12em 1.4em;
