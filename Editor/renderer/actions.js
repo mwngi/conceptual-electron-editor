@@ -103,21 +103,71 @@ const subscribe = (elementSet, menu, metadata) => {
         return true;
     }); //file.newFile
 
+    // Edit:
+
+    const selectionToClipboard = length =>
+        navigator.clipboard.writeText(elementSet.editor.value.substr(elementSet.editor.selectionStart, length));
+
+    menu.subscribe(elementSet.menuItems.edit.cut.textContent, actionRequest => {
+        const length = elementSet.editor.selectionEnd - elementSet.editor.selectionStart;
+        if (!actionRequest) return length > 0;
+        selectionToClipboard(length);
+        elementSet.editor.setRangeText("");
+        elementSet.editor.focus();
+        return true;
+    }); //edit.cut
+
+    menu.subscribe(elementSet.menuItems.edit.copy.textContent, actionRequest => {
+        const length = elementSet.editor.selectionEnd - elementSet.editor.selectionStart;
+        if (!actionRequest) return length > 0;
+        selectionToClipboard(length);
+        elementSet.editor.focus();
+        return true;
+    }); //edit.copy
+
+    menu.subscribe(elementSet.menuItems.edit.paste.textContent, actionRequest => {
+        if (!actionRequest) return true; //SA???
+        elementSet.editor.focus();
+        navigator.clipboard.readText().then(value =>
+            elementSet.editor.setRangeText(value));
+        return true;
+    }); //edit.paste
+
+    menu.subscribe(elementSet.menuItems.edit.selectAll.textContent, actionRequest => {
+        if (!actionRequest) return elementSet.editor.textLength > 0;
+        elementSet.editor.focus();
+        elementSet.editor.select();
+        return true;
+    }); //selectAll.textContent
+
     // View:
 
-    let statusBarVisible = true;
-
-    menu.subscribe(elementSet.menuItems.view.statusBar.textContent, actionRequest => {
+    let isStatusBarVisible = true;
+    let isFullscreen = false;
+    let viewStatusBarItem, viewFullscreenItem;
+    viewStatusBarItem = menu.subscribe(elementSet.menuItems.view.statusBar.textContent, actionRequest => {
         if (!actionRequest) return true;
-        statusBarVisible = !statusBarVisible;
-        elementSet.statusBar.all.style.display = definitionSet.view.statusBarStyle(statusBarVisible);
+        isStatusBarVisible = !isStatusBarVisible;
+        if (isStatusBarVisible)
+            viewStatusBarItem.setCheckedCheckBox();
+        else
+            viewStatusBarItem.setCheckBox();
+        elementSet.statusBar.all.style.display = definitionSet.view.statusBarStyle(isStatusBarVisible);
         return true;
     }); //file.newFile
+    viewStatusBarItem.setCheckBox();
+    //setCheckedCheckBox
 
-    menu.subscribe(elementSet.menuItems.view.fullscreen.textContent, actionRequest => {
+    viewFullscreenItem = menu.subscribe(elementSet.menuItems.view.fullscreen.textContent, actionRequest => {
         if (!actionRequest) return true;
+        isFullscreen = !isFullscreen;
+        if (isFullscreen)
+            viewFullscreenItem.setCheckedCheckBox();
+        else
+            viewFullscreenItem.setCheckBox();
         window.bridgeUI.fullscreenToggle();
         return true;
     }); //file.newFile
+    viewFullscreenItem.setCheckBox();
 
 }; //subscribe

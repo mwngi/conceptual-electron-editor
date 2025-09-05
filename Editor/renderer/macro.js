@@ -39,6 +39,11 @@ const createMacroProcessor = editor => {
         textLength R/O
         setRangeText()
         setSelectionRange()
+                navigator.clipboard.readText().then(
+                    v => {
+                        editor.editor.setRangeText(v);
+                    });
+
         */
     }; //playMacro
 

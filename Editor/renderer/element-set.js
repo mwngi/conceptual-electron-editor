@@ -20,6 +20,12 @@ const getElementSet = document => {
                 about: document.querySelector("#menu-about"),
                 sourceCode: document.querySelector("#menu-source-code"),
             },
+            edit: {
+                cut: document.querySelector("#menu-cut"),
+                copy: document.querySelector("#menu-copy"),
+                paste: document.querySelector("#menu-paste"),
+                selectAll: document.querySelector("#menu-select-all"),
+            },
             macro: {
                 startRecording: document.querySelector("#menu-start-macro-recoding"),
                 stopRecording: document.querySelector("#menu-stop-macro-recoding"),
@@ -28,6 +34,7 @@ const getElementSet = document => {
             view: {
                 statusBar: document.querySelector("#menu-status-bar"),
                 fullscreen: document.querySelector("#menu-full-screen"),
+                wordWrap: document.querySelector("#menu-word-wrap"),
             },
             pluginParent: document.querySelector("#menu-plugins"),
         },
