@@ -17,7 +17,7 @@ const subscribe = (elementSet, menu, metadata) => {
             ? definitionSet.status.modified
             : null;
     }; //updateModifiedFlag
-    elementSet.editor.oninput = () => updateModifiedFlag(true);
+    elementSet.editor.addEventListener(definitionSet.events.input, () => updateModifiedFlag(true));
        
     const handleFileOperationResult = (filename, baseFilename, text, error, isSave) => {
         if (!error) {

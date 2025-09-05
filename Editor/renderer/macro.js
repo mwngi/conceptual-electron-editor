@@ -5,32 +5,45 @@ const createMacroProcessor = (editor, stateIndicator) => {
     let recordingMacro = false;
     let macro = [];
 
+    const getState = (target, newState) => {
+        if (newState)
+            return { // delta
+                length: newState.length - target.length,
+                selection: [ newState.selection[0] - target.selection[0], newState.selection[1] - target.selection[1] ],
+            };
+        else
+            return {
+                length: target.textLength,
+                selection: [ target.selectionStart, target.selectionEnd ],
+    }}; //getState
+
+    editor.addEventListener(definitionSet.events.input, event => {
+        if (!recordingMacro) return;
+        let action;
+        if (event.inputType.startsWith("insert")) //SA??? see https://w3c.github.io/input-events/#interface-InputEvent-Attributes
+            action = "+";
+        else if (event.inputType.startsWith("delete")) //SA???
+            action = "-";
+        else
+            action = "";
+        macro.push({
+                    data: event.data ? event.data : "\n",
+                    action: action,
+                    state: getState(event.target),
+                });
+    }); //editor.onkeydown
+
     const playMacro = () => {
         if (recordingMacro) return;
-        const initialSelection = editor.selectionStart;
-        let delta = null;
-        for (const event of macro) { // SA??? not fully implemented
-            if (event.type == definitionSet.events.selectionchange) {
-                if (delta == null)
-                    delta = initialSelection - event.point.start;
-                editor.setSelectionRange(event.point.start + delta, event.point.end + delta);
-            } else {
-                if (event.key.length == 1) {
-                    editor.setRangeText(event.key);
-                } else if (event.code == definitionSet.keys.Backspace) {
-                    if (editor.selectionStart == editor.selectionEnd && editor.selectionStart > 0)
-                        editor.setRangeText("", editor.selectionStart - 1, editor.selectionStart);
-                    else
-                        editor.setRangeText("");
-                } else if (event.code == definitionSet.keys.Delete) {
-                    if (editor.selectionStart == editor.selectionEnd && editor.textLength > editor.selectionStart)  
-                        editor.setRangeText("", editor.selectionStart, editor.selectionStart + 1);
-                    else
-                        editor.setRangeText("");
-                } else if (event.code == definitionSet.keys.Enter) {
-                    editor.setRangeText("\n");
-                } //if
-            } //if keyboard type
+        let initialState = getState(editor);
+        for (const element of macro) { // SA??? not fully implemented
+            const delta = getState(initialState, element.state);
+            editor.setRangeText(element.data ? element.data : "?"); //SA??? about ?
+            if (element.data && initialState)
+                editor.setSelectionRange(
+                    initialState.selection[0] + delta.selection[0],
+                    initialState.selection[1] + delta.selection[1],)
+            initialState = element.state;
         } //loop
         /*
         selectionDirection { forward, backward}
@@ -54,29 +67,13 @@ const createMacroProcessor = (editor, stateIndicator) => {
         recordingMacro = on;
         stateIndicator.innerHTML = on
             ? definitionSet.status.macroRecording
-            : (macro.length > 1 //SA!!! one event comes from editor.focus()
+            : (macro.length > 0
                 ? definitionSet.status.macroAvailable
                 : null);
     } //setRecordingState
     const canRecord = () => !recordingMacro;
     const canStopRecording = () => recordingMacro;
     const canPlay = () => !recordingMacro && macro.length > 0;
-
-    editor.addEventListener(definitionSet.events.keydown, event => {
-        if (!recordingMacro) return;
-        if (event.ctrlKey || event.altKey) return;
-        if (event.key.length == 1 ||
-            event.code == definitionSet.keys.Backspace ||
-            event.code == definitionSet.keys.Delete || 
-            event.code == definitionSet.keys.Enter)
-                macro.push(event);
-    }); //editor.onkeydown
-
-    editor.addEventListener(definitionSet.events.selectionchange, event => {
-        if (!recordingMacro) return;
-        event.point = { start: event.target.selectionStart, end: event.target.selectionEnd, }
-        macro.push(event);
-    }); //editor.onselectionchange
 
     window.addEventListener(definitionSet.events.keydown, event => {
         if (event.shiftKey && event.ctrlKey) {
