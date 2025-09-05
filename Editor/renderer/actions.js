@@ -32,17 +32,32 @@ const subscribe = (elementSet, menu, metadata) => {
     window.bridgeFileIO.subscribeToCommandLine((filename, baseFilename, text, error) =>
         handleFileOperationResult(filename, baseFilename, text, error));
 
+    const actionOnConfirmation = action => {
+        if (isModified)
+            modalDialog.show(
+                definitionSet.modifiedTextOperationConfirmation.message, {
+                buttons: definitionSet.modifiedTextOperationConfirmation.buttons(saveAs, action),
+            });
+        else
+            action();
+    }; //actionOnConfirmation
+
     menu.subscribe(elementSet.menuItems.file.newFile.textContent, actionRequest => {
-        if (!actionRequest) return true;
-        elementSet.editor.value = null;
-        elementSet.editor.focus();
+        if (!actionRequest) return isModified || currentFilename != null;
+        actionOnConfirmation(() => {
+            elementSet.editor.value = null;
+            elementSet.editor.focus();
+            isModified = false;
+        }); //actionOnConfirmation
         return true;
     }); //file.newFile
 
     menu.subscribe(elementSet.menuItems.file.open.textContent, actionRequest => {
         if (!actionRequest) return true;
-        window.bridgeFileIO.openFile((filename, baseFilename, text, error) =>
+        actionOnConfirmation(() => {
+            window.bridgeFileIO.openFile((filename, baseFilename, text, error) =>
             handleFileOperationResult(filename, baseFilename, text, error));
+        });
         return true;
     }); //file.open
 

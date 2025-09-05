@@ -29,6 +29,18 @@ const getDefinitionSet = () => {
             <br/>Chromium: v.&thinsp;${metadata.versions.chrome}
             <br/>Node.js: v.&thinsp;${metadata.versions.node}
             <br/><br/>`,
+        modifiedTextOperationConfirmation: {
+            message: `<p>Do you want to save the changes?</p><br>
+                <small>
+                <p>The changes will be lost if you don't save them.</p>
+                <p>You can save them now and repeat the operation later, or cancel.</p>
+                </small>
+                </br>`,
+            buttons: (saveAction, dontSaveAction) => [
+                { text: "Save", action: saveAction, },
+                { text: "Don't Save", action : dontSaveAction },
+                { isDefault: true, escape: true, text: "Cancel" }],
+        }, //modifiedTextOperationConfirmation
         events: {
             DOMContentLoaded: 0,
             keydown: 0,
