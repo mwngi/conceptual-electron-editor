@@ -32,15 +32,28 @@ const subscribe = (elementSet, menu, metadata) => {
     window.bridgeFileIO.subscribeToCommandLine((filename, baseFilename, text, error) =>
         handleFileOperationResult(filename, baseFilename, text, error));
 
-    const actionOnConfirmation = action => {
-        if (isModified)
+    const actionOnConfirmation = (action, closingApplication) => {
+        const wrapper = () => {
+            isModified = !closingApplication;
+            window.close();
+        }; //wrapper
+        if (isModified) {
+            const message = closingApplication
+                ? definitionSet.modifiedTextOperationConfirmation.messageClosingApplication
+                : definitionSet.modifiedTextOperationConfirmation.message;
             modalDialog.show(
-                definitionSet.modifiedTextOperationConfirmation.message, {
-                buttons: definitionSet.modifiedTextOperationConfirmation.buttons(saveAs, action),
-            });
-        else
+                message, {
+                    buttons: definitionSet.modifiedTextOperationConfirmation.buttons(saveAs, wrapper),
+                });
+        } else
             action();
     }; //actionOnConfirmation
+
+    window.bridgeUI.subscribeToApplicationClose(() => {
+        if (!isModified) return true;
+        actionOnConfirmation(() => { permitted = true; }, true);
+        return !isModified;
+    }); //subscribeToApplicationClose
 
     menu.subscribe(elementSet.menuItems.file.newFile.textContent, actionRequest => {
         if (!actionRequest) return isModified || currentFilename != null;

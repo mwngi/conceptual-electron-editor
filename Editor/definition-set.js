@@ -1,6 +1,7 @@
 const definitionSet = {
     events: {
         activate: 0,
+        close: 0,
         readyToShow: "ready-to-show",
         windowAllClosed: "window-all-closed",
     },

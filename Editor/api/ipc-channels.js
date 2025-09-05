@@ -17,6 +17,7 @@ const ipcChannel = {
     ui: {
         fullscreen: 0,
         fullscreenToggle: 0,
+        requestToIgnoreUnsavedData: 0,
     }, //ui
 }; //ipcChannel
 

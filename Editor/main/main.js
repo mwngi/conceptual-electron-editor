@@ -83,6 +83,18 @@ function createWindow() {
         handleCommandLine(window);
         window.show();
     }); //once ready to show
+    let permittedToCloseApplication = false;
+    window.on(definitionSet.events.close, event => {
+        if (permittedToCloseApplication) return;
+        window.webContents.send(ipcChannel.ui.requestToIgnoreUnsavedData);
+        ipcMain.once(ipcChannel.ui.requestToIgnoreUnsavedData, (_event, response) => {
+            if (response) {
+                permittedToCloseApplication = true;
+                window.close();
+            } //if
+        });
+        event.preventDefault();
+    }); //on close
     window.loadFile(path.join(applicationPath, definitionSet.paths.index));
     subscribeToEvents(window);
     Menu.setApplicationMenu(null);
@@ -90,12 +102,12 @@ function createWindow() {
 
 app.whenReady().then(() => {
     createWindow();
-    app.on(definitionSet.events.activate, function () {
+    app.on(definitionSet.events.activate, () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     });
 }); //app.whenReady
 
-app.on(definitionSet.events.windowAllClosed, function () {
+app.on(definitionSet.events.windowAllClosed, event => {
     if (!definitionSet.isDarwin(process))
         app.quit();
 }); //app on window all closed

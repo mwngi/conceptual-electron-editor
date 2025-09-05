@@ -42,4 +42,9 @@ contextBridge.exposeInMainWorld(bridgeAPI.bridgeUI, {
         ipcRenderer.send(ipcChannel.ui.fullscreen, onOff),
     fullscreenToggle: () =>
         ipcRenderer.send(ipcChannel.ui.fullscreenToggle),
+    subscribeToApplicationClose: request => {
+        ipcRenderer.on(ipcChannel.ui.requestToIgnoreUnsavedData, _event => {
+            ipcRenderer.send(ipcChannel.ui.requestToIgnoreUnsavedData, request());
+        });
+    }, //subscribeToApplicationClose
 }); //contextBridge.exposeInMainWorld
