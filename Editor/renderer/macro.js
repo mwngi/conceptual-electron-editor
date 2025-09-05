@@ -52,8 +52,14 @@ const createMacroProcessor = editor => {
             if (event.code == definitionSet.keys.KeyP && canPlay()) {
                 playMacro();
                 event.preventDefault();
-            } else if (event.code == definitionSet.keys.KeyR && canRecord()) {
-                setRecordingState(true);
+            } else if (event.code == definitionSet.keys.KeyR) {
+                let decision = null;
+                if (canRecord())
+                    decision = true;
+                else if (canStopRecording())
+                    decision = false;
+                if (decision != null)
+                    setRecordingState(decision);
                 event.preventDefault();
             } //if
         } //if
