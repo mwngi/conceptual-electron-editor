@@ -1,6 +1,6 @@
 "use strict";
 
-const createMacroProcessor = editor => {
+const createMacroProcessor = (editor, stateIndicator) => {
 
     let recordingMacro = false;
     let macro = [];
@@ -49,8 +49,14 @@ const createMacroProcessor = editor => {
 
     const recordingState = () => recordingMacro;
     const setRecordingState = on => {
-        if (on) macro = [];
+        if (on)
+            macro = [];
         recordingMacro = on;
+        stateIndicator.innerHTML = on
+            ? definitionSet.status.macroRecording
+            : (macro.length > 1 //SA!!! one event comes from editor.focus()
+                ? definitionSet.status.macroAvailable
+                : null);
     } //setRecordingState
     const canRecord = () => !recordingMacro;
     const canStopRecording = () => recordingMacro;

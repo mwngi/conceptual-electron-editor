@@ -7,6 +7,7 @@ const getElementSet = document => {
         statusBar: {
             all: document.querySelector("footer"),
             modifiedFlag: document.querySelector("span#id-modified-flag"),
+            macroFlag: document.querySelector("span#id-macro-flag"),
             cursorPositionIndicator: document.querySelector("span#id-position-indicator"), // to implement
         },
         menuItems: {

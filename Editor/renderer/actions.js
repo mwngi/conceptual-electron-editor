@@ -82,7 +82,7 @@ const subscribe = (elementSet, menu, metadata) => {
 
     // Macro:
 
-    const macroProcessor = createMacroProcessor(elementSet.editor);
+    const macroProcessor = createMacroProcessor(elementSet.editor, elementSet.statusBar.macroFlag);
     menu.subscribe(elementSet.menuItems.macro.startRecording.textContent, actionRequest => {
         if (!actionRequest) return macroProcessor.canRecord();
         elementSet.editor.focus();

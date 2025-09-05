@@ -57,6 +57,8 @@ const getDefinitionSet = () => {
                 const column = lines[lines.length-1].length + 1;
                 return `${row}&thinsp;:&thinsp;${column}`;
             }, //cursorPosition
+            macroRecording: "Recording keyboard macro&hellip; press Ctrl+Shift+R to stop",
+            macroAvailable: "Keyboard macro is ready to play, press Ctrl+Shift+P",
         }, //status
         errorHandling: {
             format: (errorKind, errorMessage) => `${errorKind}:<br/><br/><span style="color: red">${errorMessage}</span>`,
