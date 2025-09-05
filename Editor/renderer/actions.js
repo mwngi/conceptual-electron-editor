@@ -37,13 +37,14 @@ const subscribe = (elementSet, menu, metadata) => {
             isModified = !closingApplication;
             window.close();
         }; //wrapper
+        const effectiveAction = closingApplication ? wrapper : action;
         if (isModified) {
             const message = closingApplication
                 ? definitionSet.modifiedTextOperationConfirmation.messageClosingApplication
                 : definitionSet.modifiedTextOperationConfirmation.message;
             modalDialog.show(
                 message, {
-                    buttons: definitionSet.modifiedTextOperationConfirmation.buttons(saveAs, wrapper),
+                    buttons: definitionSet.modifiedTextOperationConfirmation.buttons(saveAs, effectiveAction),
                 });
         } else
             action();

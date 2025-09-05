@@ -26,8 +26,11 @@ const createMacroProcessor = (editor, stateIndicator) => {
             action = "-";
         else
             action = "";
+        let data = event.data;
+        if (!data && event.inputType == "insertLineBreak") //special case, ugly one
+            data = "\n";
         macro.push({
-                    data: event.data ? event.data : "\n",
+                    data: data,
                     action: action,
                     state: getState(event.target),
                 });
@@ -36,28 +39,22 @@ const createMacroProcessor = (editor, stateIndicator) => {
     const playMacro = () => {
         if (recordingMacro) return;
         let initialState = getState(editor);
-        for (const element of macro) { // SA??? not fully implemented
-            const delta = getState(initialState, element.state);
-            editor.setRangeText(element.data ? element.data : "?"); //SA??? about ?
-            if (element.data && initialState)
-                editor.setSelectionRange(
-                    initialState.selection[0] + delta.selection[0],
-                    initialState.selection[1] + delta.selection[1],)
-            initialState = element.state;
-        } //loop
-        /*
-        selectionDirection { forward, backward}
-        selectionStart
-        selectionEnd
-        textLength R/O
-        setRangeText()
-        setSelectionRange()
-                navigator.clipboard.readText().then(
-                    v => {
-                        editor.editor.setRangeText(v);
-                    });
+        let delta = null;
+        for (const element of macro) { // SA??? not fully implemented            
+            if (!delta)
+                delta = getState(element.state, initialState);
+            if (element.action == "+") {
+                if (!element.data)
+                    element.data = "?";
+                editor.setRangeText(element.data);
+                if (element.data)
+                    editor.setSelectionRange(
+                        element.state.selection[0] + delta.selection[0] + element.data.length,
+                        element.state.selection[1] + delta.selection[1] + element.data.length,)
+            } else if (macro.action == "-") {
 
-        */
+            } //if delete
+        } //loop
     }; //playMacro
 
     const recordingState = () => recordingMacro;
