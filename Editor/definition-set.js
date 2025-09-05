@@ -27,7 +27,7 @@ const definitionSet = {
     }, //plugin
     isDarwin: process => process.platform == 'darwin',
     testCommandLineKey: "test",
-    createWindowProperties: preloadScript => {
+    createWindowProperties: (title, preloadScript) => {
         return { // see https://www.electronjs.org/docs/latest/api/base-window#new-basewindowoptions
             resizable: true,
             minWidth: 800,
@@ -37,7 +37,7 @@ const definitionSet = {
             show: false,
             frame: true,
             transparent: false,
-            title: "",
+            title: title,
             webPreferences: { //https://www.electronjs.org/docs/latest/api/structures/web-preferences
                 preload: preloadScript,
                 sandbox: false, // required with CommonJS or ES Modules used in preload

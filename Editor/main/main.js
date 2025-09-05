@@ -16,24 +16,25 @@ const handlePlugins = (applicationPath, window) => {
     pluginProvider.sendScripts(ipcChannel.plugin.loadAll);
 }; //handlePlugins
 
+const applicationPackage = (() => {
+    const packageFileName = path.join(app.getAppPath(), definitionSet.paths.package);
+    if (fs.existsSync(packageFileName))
+        return JSON.parse(fs.readFileSync(packageFileName));
+})();
+
+const title = applicationPackage?.description;
+
 const subscribeToEvents = window => {
-    const getPackage = () => {
-        const packageFileName = path.join(app.getAppPath(), definitionSet.paths.package);
-        if (fs.existsSync(packageFileName))
-            return JSON.parse(fs.readFileSync(packageFileName));
-    }; //getPackage
     ipcMain.handle(ipcChannel.metadata.request, async (_event) => {
-        const thePackage = getPackage();
         return {
-            package: thePackage,
+            package: applicationPackage,
             versions: process.versions,
             applicationVersion: app.getVersion(),
             applicationName: app.name,
     }}); //metadata.request
     ipcMain.on(ipcChannel.metadata.source, () => {
-        const thePackage = getPackage();
-        if (thePackage) {
-            const source = thePackage.repository;
+        if (applicationPackage) {
+            const source = applicationPackage.repository;
             if (source)
                 shell.openExternal(source);
         } //if
@@ -74,7 +75,7 @@ const handleCommandLine = window => {
 function createWindow() {
     const applicationPath = app.getAppPath();
     const window = new BrowserWindow(
-        definitionSet.createWindowProperties(
+        definitionSet.createWindowProperties(title,
             path.join(applicationPath, definitionSet.paths.preload)));
     window.maximize(); //SA???
     window.once(definitionSet.events.readyToShow, () => {
