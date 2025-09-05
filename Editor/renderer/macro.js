@@ -4,6 +4,7 @@ const createMacroProcessor = editor => {
 
     let recordingMacro = false;
     let macro = [];
+
     const playMacro = () => {
         if (recordingMacro) return;
         const initialSelection = editor.selectionStart;
@@ -17,14 +18,28 @@ const createMacroProcessor = editor => {
                 if (event.key.length == 1) {
                     editor.setRangeText(event.key);
                 } else if (event.code == definitionSet.keys.Backspace) {
-                    editor.setRangeText("");
+                    if (editor.selectionStart == editor.selectionEnd && editor.selectionStart > 0)
+                        editor.setRangeText("", editor.selectionStart - 1, editor.selectionStart);
+                    else
+                        editor.setRangeText("");
                 } else if (event.code == definitionSet.keys.Delete) {
-                    editor.setRangeText("");
+                    if (editor.selectionStart == editor.selectionEnd && editor.textLength > editor.selectionStart)  
+                        editor.setRangeText("", editor.selectionStart, editor.selectionStart + 1);
+                    else
+                        editor.setRangeText("");
                 } else if (event.code == definitionSet.keys.Enter) {
                     editor.setRangeText("\n");
                 } //if
             } //if keyboard type
         } //loop
+        /*
+        selectionDirection { forward, backward}
+        selectionStart
+        selectionEnd
+        textLength R/O
+        setRangeText()
+        setSelectionRange()
+        */
     }; //playMacro
 
     const recordingState = () => recordingMacro;
@@ -38,7 +53,12 @@ const createMacroProcessor = editor => {
 
     editor.addEventListener(definitionSet.events.keydown, event => {
         if (!recordingMacro) return;
-        macro.push(event);
+        if (event.ctrlKey || event.altKey) return;
+        if (event.key.length == 1 ||
+            event.code == definitionSet.keys.Backspace ||
+            event.code == definitionSet.keys.Delete || 
+            event.code == definitionSet.keys.Enter)
+                macro.push(event);
     }); //editor.onkeydown
 
     editor.addEventListener(definitionSet.events.selectionchange, event => {
